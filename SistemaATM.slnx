@@ -1,5 +1,5 @@
 <Solution>
-  <Folder Name="/Solution Items/">
+  <Folder Name="/Docs/">
     <File Path="README.md" />
   </Folder>
   <Project Path="SistemaATM.Console/SistemaATM.Console.csproj" />
