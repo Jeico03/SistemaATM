@@ -9,98 +9,113 @@
             bool cuentaActiva = true;
             decimal saldo = 10000.00m;
 
-            System.Console.WriteLine("Bienvenido al Sistema ATM");
-            System.Console.WriteLine($"Titular: {titular}");
-            System.Console.WriteLine($"Cuenta:  {numeroCuenta}");
-            System.Console.WriteLine("---------------------------");
-            System.Console.WriteLine("1. Consultar saldo");
-            System.Console.WriteLine("2. Depositar");
-            System.Console.WriteLine("3. Retirar");
-            System.Console.WriteLine("4. Salir");
-            System.Console.Write("Seleccione una opción: ");
+            int opcion;
 
-            if (!int.TryParse(System.Console.ReadLine(), out int opcion))
+            do
             {
-                System.Console.WriteLine("Error: debe ingresar un número del 1 al 4.");
-            }
-            else
-            {
-                switch (opcion)
+                System.Console.WriteLine();
+                System.Console.WriteLine("=== CAJERO AUTOMATICO ===");
+                System.Console.WriteLine($"Titular: {titular}");
+                System.Console.WriteLine($"Cuenta:  {numeroCuenta}");
+                System.Console.WriteLine($"Saldo actual: {saldo:C}");
+                System.Console.WriteLine("---------------------------");
+                System.Console.WriteLine("1. Consultar saldo");
+                System.Console.WriteLine("2. Depositar");
+                System.Console.WriteLine("3. Retirar");
+                System.Console.WriteLine("4. Salir");
+                System.Console.Write("Seleccione una opción: ");
+
+                if (!int.TryParse(System.Console.ReadLine(), out opcion))
                 {
-                    case 1:
-                        if (!cuentaActiva)
-                        {
-                            System.Console.WriteLine("Operación rechazada: la cuenta no está activa.");
-                        }
-                        else
-                        {
-                            System.Console.WriteLine($"Saldo disponible: {saldo:C}");
-                        }
-                        break;
-                    case 2: 
-                        if (!cuentaActiva)
-                        {
-                            System.Console.WriteLine("Operación rechazada: la cuenta no está activa.");
-                        }
-                        else
-                        {
-                            System.Console.Write("Ingrese el monto a depositar: ");
-                            if (!decimal.TryParse(System.Console.ReadLine(), out decimal montoDep))
+                    System.Console.WriteLine("Error: debe ingresar un número del 1 al 4.");
+                }
+                else
+                {
+                    switch (opcion)
+                    {
+                        case 1:
+                            if (!cuentaActiva)
                             {
-                                System.Console.WriteLine("Error: el monto debe ser un número.");
-                            }
-                            else if (montoDep <= 0)
-                            {
-                                System.Console.WriteLine("Operación rechazada: el monto debe ser mayor que cero.");
+                                System.Console.WriteLine("Operación rechazada: la cuenta no está activa.");
                             }
                             else
                             {
-                                saldo += montoDep;
-                                System.Console.WriteLine($"Depósito realizado. Nuevo saldo: {saldo:C}");
-                            }
-                        }
-                        break;
-                    case 3:
-                        if (!cuentaActiva)
-                        {
-                            System.Console.WriteLine("Operación rechazada: la cuenta no está activa.");
-                        }
-                        else
-                        {
-                            System.Console.Write("Ingrese el monto a retirar: ");
-                            if (!decimal.TryParse(System.Console.ReadLine(), out decimal montoRet))
-                            {
-                                System.Console.WriteLine("Error: el monto debe ser un número.");
-                            }
-                            else if (montoRet <= 0)
-                            {
-                                System.Console.WriteLine("Operación rechazada: el monto debe ser mayor que cero.");
-                            }
-                            else if (montoRet > saldo)
-                            {
-                                System.Console.WriteLine("Operación rechazada: saldo insuficiente.");
                                 System.Console.WriteLine($"Saldo disponible: {saldo:C}");
                             }
+                            break;
+
+                        case 2:
+                            if (!cuentaActiva)
+                            {
+                                System.Console.WriteLine("Operación rechazada: la cuenta no está activa.");
+                            }
                             else
                             {
-                                saldo -= montoRet;
-                                System.Console.WriteLine($"Retiro realizado. Nuevo saldo: {saldo:C}");
+                                System.Console.Write("Ingrese el monto a depositar: ");
+                                if (!decimal.TryParse(System.Console.ReadLine(), out decimal montoDep))
+                                {
+                                    System.Console.WriteLine("Error: el monto debe ser un número.");
+                                }
+                                else if (montoDep <= 0)
+                                {
+                                    System.Console.WriteLine("Operación rechazada: el monto debe ser mayor que cero.");
+                                }
+                                else
+                                {
+                                    saldo += montoDep;
+                                    System.Console.WriteLine($"Depósito realizado. Nuevo saldo: {saldo:C}");
+                                }
                             }
-                        }
-                        break;
-                    case 4:
-                        System.Console.WriteLine("Gracias por usar el cajero. ¡Hasta luego!");
-                        break;
+                            break;
 
-                    default:
-                        System.Console.WriteLine("Error: opción no válida. Debe elegir del 1 al 4.");
-                        break;
+                        case 3:
+                            if (!cuentaActiva)
+                            {
+                                System.Console.WriteLine("Operación rechazada: la cuenta no está activa.");
+                            }
+                            else
+                            {
+                                System.Console.Write("Ingrese el monto a retirar: ");
+                                if (!decimal.TryParse(System.Console.ReadLine(), out decimal montoRet))
+                                {
+                                    System.Console.WriteLine("Error: el monto debe ser un número.");
+                                }
+                                else if (montoRet <= 0)
+                                {
+                                    System.Console.WriteLine("Operación rechazada: el monto debe ser mayor que cero.");
+                                }
+                                else if (montoRet > saldo)
+                                {
+                                    System.Console.WriteLine("Operación rechazada: saldo insuficiente.");
+                                    System.Console.WriteLine($"Saldo disponible: {saldo:C}");
+                                }
+                                else
+                                {
+                                    saldo -= montoRet;
+                                    System.Console.WriteLine($"Retiro realizado. Nuevo saldo: {saldo:C}");
+                                }
+                            }
+                            break;
+
+                        case 4:
+                            System.Console.WriteLine("Gracias por usar el cajero. ¡Hasta luego!");
+                            break;
+
+                        default:
+                            System.Console.WriteLine("Error: opción no válida. Debe elegir del 1 al 4.");
+                            break;
+                    }
                 }
-            }
 
-            System.Console.WriteLine();
-            System.Console.WriteLine("Presione una tecla para salir...");
-            System.Console.ReadKey();
+                // Pequeña pausa opcional entre operaciones para que el usuario alcance a leer el resultado antes de que se limpie/redibuje el menú
+                if (opcion != 4)
+                {
+                    System.Console.WriteLine("\nPresione cualquier tecla para continuar...");
+                    System.Console.ReadKey();
+                    System.Console.Clear(); // Limpia la consola para mantenerla ordenada en cada iteración
+                }
+
+            } while (opcion != 4); // FIN DEL CICLO: Se repite si no eligió salir
 
         }
     }
