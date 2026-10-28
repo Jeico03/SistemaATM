@@ -107,15 +107,14 @@
                     }
                 }
 
-                // Pequeña pausa opcional entre operaciones para que el usuario alcance a leer el resultado antes de que se limpie/redibuje el menú
                 if (opcion != 4)
                 {
                     System.Console.WriteLine("\nPresione cualquier tecla para continuar...");
                     System.Console.ReadKey();
-                    System.Console.Clear(); // Limpia la consola para mantenerla ordenada en cada iteración
+                    System.Console.Clear(); 
                 }
 
-            } while (opcion != 4); // FIN DEL CICLO: Se repite si no eligió salir
+            } while (opcion != 4); 
 
         }
     }

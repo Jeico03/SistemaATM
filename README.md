@@ -1,72 +1,63 @@
-# Sistema ATM — Validaciones y menú de operaciones
+# 🏧 Laboratorio 3.10 — Mini ATM V1 (Operaciones Iterativas)
 
-**Actividad 3.5 · Semana 3 · Día 1 — Fundamentos de Programación con C#**
-**Estudiante:** Jeico Arias
+**Asignatura:** Fundamentos de Programación con C# — CodeArt Academy  
+**Estudiante:** Jeico Arias Brito  
+**Docentes:** Francis Ricardo Ramirez De Leon y Manuel Titín  
 
-## Descripción
+## 📋 Descripción del Proyecto
+Evolución del prototipo de cajero automático en consola. Esta versión incorpora un **menú repetitivo (mediante bucle `do-while`)** que permite al usuario efectuar múltiples operaciones consecutivas (consultas, depósitos y retiros) en una misma sesión sin necesidad de reiniciar el programa. El sistema mantiene el saldo actualizado en memoria y valida de forma robusta las entradas y reglas de negocio.
 
-Prototipo educativo de cajero automático en consola, con datos en memoria.
-Permite consultar saldo, depositar y retirar sobre una única cuenta, aplicando
-reglas de validación. El menú se procesa una sola vez: no se usan ciclos en
-esta entrega.
+## 📥 Análisis de Entradas, Proceso y Salidas (IPO)
+| Entradas (Inputs) | Proceso (Process) | Salidas (Outputs) |
+| :--- | :--- | :--- |
+| • Opción del menú (`string` convertida a `int`)<br>• Montos de depósito o retiro (`string` convertida a `decimal`) | 1. Mostrar menú interactivo y saldo actual en un ciclo continuo.<br>2. Validar opciones y montos con `int.TryParse` y `decimal.TryParse`.<br>3. Comprobar reglas de negocio (estado de cuenta, montos mayores a cero y fondos disponibles).<br>4. Actualizar el saldo acumulado en memoria tras cada transacción válida. | • Mensajes de error controlados ante entradas no numéricas o fuera de rango.<br>• Mensajes de éxito o rechazo detallados.<br>• Despedida y cierre controlado de la sesión al seleccionar la opción 4. |
 
-## Objetivos
-
-- OB-01. Consultar el saldo de una cuenta.
-- OB-02. Permitir depósitos y retiros sujetos a reglas.
-- OB-03. Evitar cambios de saldo ante operaciones rechazadas.
-- OB-04. Comunicar el resultado de cada solicitud.
-- OB-05. Mantener la trazabilidad entre requerimientos y pruebas.
-
-## Datos de la cuenta
-
+## 🚀 Datos de la Cuenta de Prueba
 | Dato | Valor |
 |---|---|
 | Titular | Jeico Arias |
 | Número de cuenta | 73721 |
-| Estado | Activa |
+| Estado | Activa (`true`) |
 | Saldo inicial | RD$10,000.00 |
 
-## Reglas de negocio
+## 🛠️ Reglas de Negocio Implementadas
+* **RN-01:** La cuenta debe estar activa para permitir depósitos y retiros.
+* **RN-02 / RN-03:** Los montos de depósito y retiro deben ser mayores que cero.
+* **RN-04:** El retiro no puede superar el saldo disponible en la cuenta.
+* **RN-05 a RN-07:** Las operaciones válidas actualizan el saldo; las rechazadas lo conservan intacto.
+* **RN-08 / RN-11:** Las opciones inválidas o entradas no numéricas generan un error controlado sin cerrar la sesión.
+* **RN-09 / RN-10:** El menú se repite de forma indefinida hasta que el usuario selecciona explícitamente la opción `4` (Salir).
+* **RN-12:** El saldo resultante de una operación es la base para la siguiente transacción dentro de la misma sesión.
 
-- La cuenta debe estar activa.
-- El monto debe ser un número válido y mayor que cero.
-- El retiro no puede superar el saldo disponible.
-- Una operación rechazada no modifica el saldo.
+## 🔗 Matriz de Trazabilidad
+| Necesidad / Requisito | Reglas asociadas | Casos de uso | Casos de prueba vinculados |
+|---|---|---|---|
+| **RB-01** (Operaciones consecutivas) | RN-09 | CU-01 a CU-04 | CP-01, CP-07, CP-09 |
+| **RB-02** (Secuencia y saldo actualizado) | RN-05, RN-06, RN-12 | CU-01 a CU-03 | CP-02, CP-03, CP-09 |
+| **RB-03** (Protección ante errores y rechazos) | RN-01 a RN-04, RN-07, RN-08, RN-11 | CU-02 a CU-04 | CP-04 a CP-08, CP-10, CP-12 |
+| **RB-04** (Salida controlada) | RN-09, RN-10 | CU-05 | CP-11 |
+| **RB-05** (Trazabilidad integral) | RN-01 a RN-12 | CU-01 a CU-05 | CP-01 a CP-12 |
 
-## Estructuras utilizadas
+## 🚦 Casos de Prueba Validados
+*(Condición inicial por defecto: cuenta activa y saldo en RD$10,000.00. En pruebas de secuencia, las operaciones se ejecutan de forma consecutiva sin reiniciar).*
 
-`switch` para el menú; `if / else` para las validaciones; `TryParse` para
-controlar entradas no numéricas. Sin ciclos.
-
-## Casos de prueba
-
-Saldo inicial RD$10,000 y cuenta activa. Cada prueba reinicia el saldo.
-
-| Código | Caso | Resultado esperado |
+| ID | Escenario / Secuencia de operaciones | Resultado Esperado |
 |---|---|---|
-| CP-01 | Consultar saldo | Muestra RD$10,000.00 |
-| CP-02 | Depositar 2,500 | Nuevo saldo: RD$12,500.00 |
-| CP-03 | Retirar 4,000 | Nuevo saldo: RD$6,000.00 |
-| CP-04 | Retirar 15,000 | Rechaza: saldo insuficiente |
-| CP-05 | Retirar -500 | Rechaza: monto debe ser mayor que cero |
-| CP-06 | Depositar 0 | Rechaza: monto debe ser mayor que cero |
-| CP-07 | Opción "abc" | Error: debe ingresar un número |
-| CP-08 | Opción 7 | Error: opción no válida |
-| CP-09 | Cuenta inactiva | Rechaza: la cuenta no está activa |
-| CP-10 | Opción 4 | Mensaje de despedida y fin |
+| **CP-01** | Opción `1` (Consultar saldo) | Muestra RD$10,000.00 y regresa al menú |
+| **CP-02** | Opción `2` → Depositar `2,000` → Consultar | Muestra nuevo saldo: RD$12,000.00 |
+| **CP-03** | Opción `3` → Retirar `3,000` → Consultar | Muestra nuevo saldo: RD$7,000.00 |
+| **CP-04** | Opción `2` → Depositar `0` | Rechaza el depósito y conserva RD$10,000.00 |
+| **CP-05** | Opción `3` → Retirar `15,000` | Rechaza por fondos insuficientes y conserva saldo |
+| **CP-06** | Opción `3` → Retirar `-500` | Rechaza el monto negativo y conserva saldo |
+| **CP-07** | Opción `9` (Menú inválido) | Muestra error y vuelve a mostrar el menú operativo |
+| **CP-08** | Opción `ABC` (Texto en menú) | Error controlado con `int.TryParse` y menú operativo |
+| **CP-09** | Secuencia: `+2,000` ➔ `-3,000` ➔ Consultar | Muestra saldo actualizado final: RD$9,000.00 |
+| **CP-10** | Cuenta inactiva → Intentar depósito o retiro | Rechaza la operación de inmediato sin cambiar saldo |
+| **CP-11** | Opción `4` (Salir) | Mensaje de despedida y terminación limpia de la sesión |
+| **CP-12** | Monto `ABC` en depósito o retiro | Rechazo controlado sin cerrar la sesión ni alterar saldo |
 
-## Matriz de trazabilidad
-
-| Objetivo | Casos de prueba |
-|---|---|
-| OB-01 | CP-01 |
-| OB-02 | CP-02, CP-03 |
-| OB-03 | CP-04, CP-05, CP-06, CP-09 |
-| OB-04 | CP-01 a CP-10 |
-| OB-05 | Esta matriz |
-
-## Cómo ejecutar
+## 🛠️ Cómo Ejecutar
+Abre tu terminal en la carpeta raíz de la solución y ejecuta el siguiente comando:
 
 ```bash
 dotnet run --project SistemaATM.Console
