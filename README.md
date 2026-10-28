@@ -56,6 +56,11 @@ Evolución del prototipo de cajero automático en consola. Esta versión incorpo
 | **CP-11** | Opción `4` (Salir) | Mensaje de despedida y terminación limpia de la sesión |
 | **CP-12** | Monto `ABC` en depósito o retiro | Rechazo controlado sin cerrar la sesión ni alterar saldo |
 
+## 🌿 Estrategia de Versionado (Git)
+El desarrollo de esta evolución se estructuró siguiendo una estrategia de ramas limpia y ordenada:
+* **`main` / `master`:** Rama base correspondiente a la versión anterior del cajero (actividad previa).
+* **`feature/mini-atm-v1`:** Rama independiente dedicada exclusivamente al desarrollo, pruebas y refactorización del ciclo iterativo (`do-while`), control de saldo y validaciones del Laboratorio 3.10.
+
 ## 🛠️ Cómo Ejecutar
 Abre tu terminal en la carpeta raíz de la solución y ejecuta el siguiente comando:
 
