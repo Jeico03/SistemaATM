@@ -2,5 +2,6 @@
   <Folder Name="/Docs/">
     <File Path="README.md" />
   </Folder>
+  <Project Path="ModeloATM/ModeloATM.csproj" Id="32bb871c-d26c-44c1-b00b-08ff36b221d3" />
   <Project Path="SistemaATM.Console/SistemaATM.Console.csproj" />
 </Solution>
